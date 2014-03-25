@@ -9,7 +9,7 @@ class Build
       output += file
     end
     # Write file
-    write_file(output_file, output)
+    write(output_file, output)
   end
 
   def replace(input, replacements)
@@ -19,6 +19,8 @@ class Build
       variable = suffix + key
       output = input.gsub("#{variable}", value.to_s)
     end
+    num = replacements.count
+    puts '- ' + num.to_s + ' replacement(s) done'
     return output
   end
 
@@ -29,12 +31,18 @@ class Build
         compressor = YUI::CssCompressor.new
         return compressor.compress(input)
       when 'html'
-
+        puts '- HTML minify not implemented now'
+        return input
     end
   end
 
-  def write_file(file, content)
+  def read(file)
+    return File.read(file)
+  end
+
+  def write(file, content)
     File.open(file,'w') do |output_file|
+      puts '- File \'' + file + '\' written'
       output_file.puts content
     end
   end

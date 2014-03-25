@@ -1,5 +1,6 @@
 build = Build.new;
 
+# CSS
 css_file = 'min/style.min.css'
 build.merge(
   [
@@ -9,7 +10,7 @@ build.merge(
   ],
   css_file
 )
-css = File.read(css_file)
+css = build.read(css_file)
 css = build.replace(
   css,
   {
@@ -20,15 +21,13 @@ css = build.replace(
   }
 );
 css = build.minify('css', css)
-build.write_file(css_file, css)
+build.write(css_file, css)
 
-
-
+# HTML
 html_file = 'src/index.src.html'
-html = File.read(html_file)
-html = build.replace(html, {'css' => css});
+html = build.read(html_file)
+html = build.replace(html, {'css' => css, 'buildinfo'=>Time.now.strftime("%d/%m/%Y %H:%M")});
 html = build.minify('html', html)
-build.write_file('min/index.html', html);
-
+build.write('min/index.html', html)
 
 # system('fortune');
