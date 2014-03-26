@@ -20,8 +20,7 @@ css = build.replace(
   {
     '$pink' => '#ff00cc',
     '$blue' => '#0099ff',
-    '$red' => '#ff0000',
-    'one' => 'eins'
+    '$red'  => '#ff0000'
   }
 )
 #build.write(css_file, css)
@@ -33,9 +32,9 @@ html = build.read(html_file)
 html = build.replace(
   html,
   {
-    '@css' => css,
+    '@css'       => css,
     '@buildinfo' => Time.now.strftime("%d/%m/%Y %H:%M"),
-    '@hello' => 'Hello world!'
+    '@hello'     => 'Hello world!'
   }
 )
 build.minify('html', html, 'min/index.html')

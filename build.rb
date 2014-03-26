@@ -10,15 +10,21 @@ class Build
     end
     # Write file
     write(output_file, output)
+    # Output Message
+    num = input_files.count
+    puts '- Merged ' + num.to_s + ' files to \'' + output_file + '\''
   end
 
   def replace(input, replacements)
+    # Replace
     output = input
     replacements.each do|key, value|
       output = output.gsub("#{key}", value.to_s)
     end
+    # Output Message
     num = replacements.count
-    puts '- ' + num.to_s + ' replacement(s) done'
+    puts '- Replaced ' + num.to_s + ' string(s) done'
+    # Return
     return output
   end
 
@@ -30,7 +36,7 @@ class Build
         compressor = YUI::CssCompressor.new
         output = compressor.compress(input)
       when 'html'
-        puts '- HTML minify not implemented now'
+        puts '- ! HTML minify not implemented now'
         output = input
     end
 
@@ -41,18 +47,44 @@ class Build
       puts '- Minified to file ' + file
       write(file, output)
     end
+    # Return
     return output
   end
 
-  def read(file)
-    return File.read(file)
+  def read(target)
+    if uri?(target)
+      output = read_uri(target)
+    else
+      output = File.read(target)
+    end
+    return output
   end
 
   def write(file, content)
     File.open(file,'w') do |output_file|
-      puts '- File \'' + file + '\' written'
+      #puts '- File \'' + file + '\' written'
       output_file.puts content
     end
+  end
+
+  def read_uri(url)
+    if uri?(url)
+      file = open(url)
+      return file.read
+    else
+      puts '- ! No valid URL'
+    end
+  end
+
+  # Passes only urls not uris?
+  def uri?(string)
+    require 'open-uri'
+    uri = URI.parse(string)
+    %w( http https ).include?(uri.scheme)
+  rescue URI::BadURIError
+    false
+  rescue URI::InvalidURIError
+    false
   end
 
 end
