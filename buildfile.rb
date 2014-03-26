@@ -1,6 +1,10 @@
+# This is an example for a build configuration
+
 build = Build.new;
 
-# CSS
+# Everything below is optional
+
+# Some CSS actions
 css_file = 'min/style.min.css'
 build.merge(
   [
@@ -23,7 +27,7 @@ css = build.replace(
 #build.write(css_file, css)
 css = build.minify('css', css, css_file)
 
-# HTML
+# Some HTML actions
 html_file = 'src/index.src.html'
 html = build.read(html_file)
 html = build.replace(
@@ -31,12 +35,10 @@ html = build.replace(
   {
     '@css' => css,
     '@buildinfo' => Time.now.strftime("%d/%m/%Y %H:%M"),
-    'title'=>'titel', 'head'=>'kopf', 'footer'=>'fuss'
+    '@hello' => 'Hello world!'
   }
 )
 build.minify('html', html, 'min/index.html')
-
-#build.replace2(html, {'title'=>'fubar', 'head'=>'kopf', 'footer'=>'fuss'})
 
 
 # system('fortune');
