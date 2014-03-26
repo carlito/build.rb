@@ -1,6 +1,6 @@
 # This is an example for a build configuration
 
-build = Build.new;
+build = Build.new
 
 # Everything below is optional
 
@@ -39,5 +39,5 @@ html = build.replace(
 )
 build.minify('html', html, 'min/index.html')
 
-
+# Shell Commands
 # system('fortune');
