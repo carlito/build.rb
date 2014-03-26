@@ -2,7 +2,7 @@
 
 A simple build script.
 
-The current version supports:
+## The current version supports:
 
 * File reading/writing
 * File merging
@@ -10,5 +10,7 @@ The current version supports:
 * CSS minification (requires yui/compressor)
 * Web content fetching
 * Base64 encoding/decoding
+
+# Usage
 
 Configure in buildfile, run build.rb.

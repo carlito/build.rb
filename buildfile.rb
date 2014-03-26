@@ -41,7 +41,8 @@ html = build.replace(
     '@cat'       => 'data:image/png;base64,' + cat
   }
 )
-build.minify('html', html, 'min/index.html')
+html = build.tidy('html', html)
+build.minify('html', html, 'min/index.min.html')
 
 # 4. Shell commands
 # system('fortune');
