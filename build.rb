@@ -23,7 +23,7 @@ class Build
     end
     # Output Message
     num = replacements.count
-    puts '- Replaced ' + num.to_s + ' string(s) done'
+    puts '- Replaced ' + num.to_s + ' string(s)'
     # Return
     return output
   end
@@ -36,15 +36,15 @@ class Build
         compressor = YUI::CssCompressor.new
         output = compressor.compress(input)
       when 'html'
-        puts '- ! HTML minify not implemented now'
+        puts '! HTML minify not implemented now'
         output = input
     end
 
     # Output based on file argument
     if file.nil?
-      puts '- Minified'
+      puts '- Minified ' + type
     else
-      puts '- Minified to file ' + file
+      puts '- Minified ' + type + ' to file ' + file
       write(file, output)
     end
     # Return
@@ -72,7 +72,7 @@ class Build
       file = open(url)
       return file.read
     else
-      puts '- ! No valid URL'
+      puts '! No valid URL'
     end
   end
 

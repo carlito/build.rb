@@ -39,5 +39,5 @@ html = build.replace(
 )
 build.minify('html', html, 'min/index.html')
 
-# Shell Commands
+# Shell commands
 # system('fortune');
