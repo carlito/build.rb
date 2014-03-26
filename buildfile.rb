@@ -39,5 +39,11 @@ html = build.replace(
 )
 build.minify('html', html, 'min/index.html')
 
+# Base64 encodings
+cat = build.to_base64('src/cat.png')
+# puts 'Here\'s your base64 cat: ' + cat
+build.from_base64(cat, 'min/cat-new.png')
+
+
 # Shell commands
 # system('fortune');

@@ -44,7 +44,7 @@ class Build
     if file.nil?
       puts '- Minified ' + type
     else
-      puts '- Minified ' + type + ' to file ' + file
+      puts '- Minified ' + type + ' to file \'' + file + '\''
       write(file, output)
     end
     # Return
@@ -85,6 +85,23 @@ class Build
     false
   rescue URI::InvalidURIError
     false
+  end
+
+  def to_base64(path)
+    require 'base64'
+    output = Base64.encode64(File.read(path))
+    puts '- Encoded image \'' + path + '\' to Base64 string'
+    return output
+  end
+
+  def from_base64(base64string, file)
+    require 'base64'
+    basepath = File.dirname(__FILE__)
+    output = Base64.decode64(base64string)
+    File.open(file, 'wb') do|f|
+      f.write(output)
+    end
+    puts '- Decoded Base64 string to ' + file
   end
 
 end
