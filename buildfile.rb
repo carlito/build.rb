@@ -37,7 +37,7 @@ html = build.replace(
   {
     '@css'       => css,
     '@buildinfo' => Time.now.strftime("%d/%m/%Y %H:%M"),
-    '@hello'     => 'Hello world!',
+    '@hello'     => 'Meow!',
     '@cat'       => 'data:image/png;base64,' + cat
   }
 )

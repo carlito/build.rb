@@ -12,6 +12,6 @@ A simple build script.
 * Base64 encoding/decoding
 * Web content fetching
 
-# Usage
+## Usage
 
 Configure in buildfile, run build.rb.
