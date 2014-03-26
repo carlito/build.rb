@@ -4,7 +4,7 @@ build = Build.new
 
 # Everything below is optional
 
-# Some CSS actions
+# 1. CSS actions
 css_file = 'min/style.min.css'
 build.merge(
   [
@@ -23,10 +23,13 @@ css = build.replace(
     '$red'  => '#ff0000'
   }
 )
-#build.write(css_file, css)
 css = build.minify('css', css, css_file)
 
-# Some HTML actions
+# 2. Base64 encodings
+cat = build.to_base64('src/cat.png')
+build.from_base64(cat, 'min/cat-new.png')
+
+# 3. HTML actions
 html_file = 'src/index.src.html'
 html = build.read(html_file)
 html = build.replace(
@@ -34,16 +37,11 @@ html = build.replace(
   {
     '@css'       => css,
     '@buildinfo' => Time.now.strftime("%d/%m/%Y %H:%M"),
-    '@hello'     => 'Hello world!'
+    '@hello'     => 'Hello world!',
+    '@cat'       => 'data:image/png;base64,' + cat
   }
 )
 build.minify('html', html, 'min/index.html')
 
-# Base64 encodings
-cat = build.to_base64('src/cat.png')
-# puts 'Here\'s your base64 cat: ' + cat
-build.from_base64(cat, 'min/cat-new.png')
-
-
-# Shell commands
+# 4. Shell commands
 # system('fortune');
