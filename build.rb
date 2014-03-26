@@ -13,27 +13,35 @@ class Build
   end
 
   def replace(input, replacements)
-    output = ''
-    suffix = '##';
+    output = input
     replacements.each do|key, value|
-      variable = suffix + key
-      output = input.gsub("#{variable}", value.to_s)
+      output = output.gsub("#{key}", value.to_s)
     end
     num = replacements.count
     puts '- ' + num.to_s + ' replacement(s) done'
     return output
   end
 
-  def minify(type, input)
+  def minify(type, input, file = nil)
+    # Minify based on type
     case type
       when 'css'
         require 'yui/compressor'
         compressor = YUI::CssCompressor.new
-        return compressor.compress(input)
+        output = compressor.compress(input)
       when 'html'
         puts '- HTML minify not implemented now'
-        return input
+        output = input
     end
+
+    # Output based on file argument
+    if file.nil?
+      puts '- Minified'
+    else
+      puts '- Minified to file ' + file
+      write(file, output)
+    end
+    return output
   end
 
   def read(file)

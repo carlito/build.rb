@@ -14,20 +14,29 @@ css = build.read(css_file)
 css = build.replace(
   css,
   {
-    'blue' => '#ff00cc',
-    'green' => '#0099ff',
-    'pink' => '#ff0000',
-    'one' => 'hm'
+    '$pink' => '#ff00cc',
+    '$blue' => '#0099ff',
+    '$red' => '#ff0000',
+    'one' => 'eins'
   }
-);
-css = build.minify('css', css)
-build.write(css_file, css)
+)
+#build.write(css_file, css)
+css = build.minify('css', css, css_file)
 
 # HTML
 html_file = 'src/index.src.html'
 html = build.read(html_file)
-html = build.replace(html, {'css' => css, 'buildinfo'=>Time.now.strftime("%d/%m/%Y %H:%M")});
-html = build.minify('html', html)
-build.write('min/index.html', html)
+html = build.replace(
+  html,
+  {
+    '@css' => css,
+    '@buildinfo' => Time.now.strftime("%d/%m/%Y %H:%M"),
+    'title'=>'titel', 'head'=>'kopf', 'footer'=>'fuss'
+  }
+)
+build.minify('html', html, 'min/index.html')
+
+#build.replace2(html, {'title'=>'fubar', 'head'=>'kopf', 'footer'=>'fuss'})
+
 
 # system('fortune');
