@@ -3,7 +3,7 @@ class Build
 
   def merge(input_files, output_file)
     # Read files
-    output = ''
+    output = String.new
     input_files.each do|file|
       file = File.read("#{file}")
       output += file
@@ -40,6 +40,7 @@ class Build
         output = remove_space_between_tags(output)
         output = remove_html_comments(output)
         output = remove_css_comments(output)
+        output = remove_css_links(output)
     end
     # Output based on file argument
     if output_file.nil?
@@ -114,7 +115,7 @@ class Build
     File.open(file, 'wb') do|f|
       f.write(output)
     end
-    puts '- Decoded Base64 string to ' + file
+    puts '- Decoded Base64 string to \'' + file + '\''
   end
 
   def remove_empty_lines(input)
@@ -134,11 +135,38 @@ class Build
 
   def remove_css_comments(input)
     # Doesn't work
-    #output = input.gsub!(\/\*(.*?)\*\/, '')
+    # output = input.gsub!("\/\*[^\*]+\*\/", ' test ')
     output = input
     return output
   end
 
+  def remove_css_links(input)
+    # Untested
+    # output = input.gsub!("/<link(.*)href(.*)css(.*)>/igm", ' <!-- css -->')
+    output = input
+    return output
+  end
+
+  def link_css(css_hash)
+    output = String.new
+    css_hash.each do |css|
+      output << '<link type="text/css" media="' + css[:file] + '" rel="stylesheet" href="' + css[:file] + '">' + "\n"
+    end
+    return output
+  end
+
+  def link_js(js_files)
+    output = String.new
+    js_files.each do |file|
+      output << '<script type="text/javascript" src="' + file + '"></script>' + "\n"
+    end
+    return output
+  end
+
+  def get_time(format = "%d/%m/%Y %H:%M")
+    return Time.now.strftime(format)
+  end
+
 end
 
-require_relative 'buildfile'
+load 'buildfile.rb'
