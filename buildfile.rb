@@ -49,9 +49,5 @@ build.minify('html', html, 'min/index.min.html')
 # 4. Shell commands
 # system('fortune');
 
-content = build.read('http://sugarman.tv')
-content = build.minify('html', content)
-build.write('sugarman.html', content)
-
 
 
