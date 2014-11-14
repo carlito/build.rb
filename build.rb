@@ -81,6 +81,16 @@ class Build
     end
   end
 
+  def read_replace(target, replacements)
+    if uri?(target)
+      output = read_uri(target)
+    else
+      output = File.read(target)
+    end
+    output = replace(output, replacements)
+    return output
+  end
+
   def read_uri(url)
     if uri?(url)
       file = open(url)

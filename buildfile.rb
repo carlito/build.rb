@@ -36,7 +36,7 @@ html = build.replace(
   html,
   {
     '@css'              => css,
-    '@buildinfo'        => Time.now.strftime("%d/%m/%Y %H:%M"),
+    '@buildinfo'        => build.get_time("%d/%m/%Y %H:%M"),
     '@hello'            => 'Meow!',
     '@cat'              => 'data:image/png;base64,' + cat,
     '<!-- @header -->'  => build.read('src/header.src.html'),
